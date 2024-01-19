@@ -10,6 +10,7 @@ generateViaListBuilder len = take len [x | x <- [0..], x `mod` 2 == 0]
 generateViaProgression :: Int -> [Int]
 generateViaProgression len = [x * 2 | x <- [0..(len - 1)]]
 
+-- Дополнительный метод через рекурсию
 generateViaRecursion :: Int -> [Int]
 generateViaRecursion 1 = [0]
 generateViaRecursion len = previousNumbers ++ [(head $ reverse previousNumbers) + 2]
