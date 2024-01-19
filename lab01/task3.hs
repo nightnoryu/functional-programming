@@ -1,18 +1,18 @@
-isEven :: Int -> Bool
-isEven x = x `mod` 2 == 0
+isOdd :: Int -> Bool
+isOdd x = x `mod` 2 /= 0
 
 generateViaFilter :: Int -> [Int]
-generateViaFilter len = take len (filter isEven [0..])
+generateViaFilter len = take len (filter isOdd [0..])
 
 generateViaListBuilder :: Int -> [Int]
-generateViaListBuilder len = take len [x | x <- [0..], x `mod` 2 == 0]
+generateViaListBuilder len = take len [x | x <- [0..], x `mod` 2 /= 0]
 
 generateViaProgression :: Int -> [Int]
-generateViaProgression len = [x * 2 | x <- [0..(len - 1)]]
+generateViaProgression len = [2 * x + 1 | x <- [0..(len - 1)]]
 
 -- Дополнительный метод через рекурсию
 generateViaRecursion :: Int -> [Int]
-generateViaRecursion 1 = [0]
+generateViaRecursion 1 = [1]
 generateViaRecursion len = previousNumbers ++ [(head $ reverse previousNumbers) + 2]
   where previousNumbers = generateViaRecursion $ len - 1
 
