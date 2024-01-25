@@ -15,6 +15,15 @@ insert l a n = (take n l) ++ [a] ++ (drop n l)
 listSumm :: Num a => [a] -> [a] -> [a]
 listSumm l1 l2 = map (\(a,b) -> a + b) (zip l1 l2)
 
+position :: Eq a => [a] -> a -> Int
+position [] _ = -1
+position l a = head [x | (x,y) <- zip [0..] l, y == a]
+
+-- Дополнительная реализация position, возвращает список всех вхождений атома в список
+positionAll :: Eq a => [a] -> a -> [Int]
+positionAll [] _ = []
+positionAll l a = [x | (x,y) <- zip [0..] l, y == a]
+
 f1 :: Int -> Int
 f1 n = sum [1..n]
 
@@ -26,5 +35,6 @@ main = do
   print(oddEven [2,5,7,9,1,8])
   print(insert [0,1,2,3,4,5] 42 3)
   print(listSumm [20, 15, 62, 31, 42] [100, 120, 150])
+  print(position [0,3,4,12,2,9,8,2,10] 2)
   print(f1 5)
   print(f2 5)
