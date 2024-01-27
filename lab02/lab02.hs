@@ -1,6 +1,3 @@
-module Main (do_my_list, oddEven, insert, listSumm, f1, f2, main) where
-import System.IO
-
 do_my_list :: Int -> [Int]
 do_my_list n = [n..(n + n - 1)]
 
@@ -30,6 +27,7 @@ f1 n = sum [1..n]
 f2 :: Int -> Int
 f2 n = sum [n - i | i <- [1..n]]
 
+main :: IO()
 main = do
   print(do_my_list 5)
   print(oddEven [2,5,7,9,1,8])

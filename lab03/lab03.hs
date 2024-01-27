@@ -1,6 +1,3 @@
-module Main(listnums, secondlastlist, myunion, main) where
-import System.IO
-
 listnums :: Int -> [Int]
 listnums 1 = [1]
 listnums n = n : listnums (n - 1)
@@ -13,5 +10,6 @@ mysubst :: Eq a => [a] => [a] => [a]
 
 getNthElementsList :: Int -> [[a]] -> [a]
 
+main :: IO()
 main = do
   print(listnums 10)
