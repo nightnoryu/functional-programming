@@ -13,12 +13,12 @@ listSumm :: Num a => [a] -> [a] -> [a]
 listSumm l1 l2 = map (\(a,b) -> a + b) (zip l1 l2)
 
 position :: Eq a => [a] -> a -> Int
-position [] _ = -1
-position l a = head [x | (x,y) <- zip [0..] l, y == a]
+position l a | null matching = -1
+             | otherwise     = head matching
+  where matching = [x | (x,y) <- zip [0..] l, y == a]
 
 -- Дополнительная реализация position, возвращает список всех вхождений атома в список
 positionAll :: Eq a => [a] -> a -> [Int]
-positionAll [] _ = []
 positionAll l a = [x | (x,y) <- zip [0..] l, y == a]
 
 f1 :: Int -> Int
