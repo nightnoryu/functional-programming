@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+
+mkdir -p bin
+
+for file in *.hs; do
+  ghc $file -o "bin/${file%.*}"
+done
