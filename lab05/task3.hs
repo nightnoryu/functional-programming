@@ -1,4 +1,5 @@
 import System.IO
+import System.Directory
 import Control.Monad
 import Data.List
 import Data.Char
@@ -8,7 +9,7 @@ mainLoop filename = do
   putStr "> "
   cmd <- getLine
   executeCmd cmd filename
-  if cmd /= "quit" then mainLoop filename else putStrLn "Finished"
+  if cmd /= "exit" then mainLoop filename else putStrLn "Finished"
 
 executeCmd :: String -> String -> IO()
 executeCmd cmd filename | cmd == "print" = printFile filename
@@ -16,7 +17,7 @@ executeCmd cmd filename | cmd == "print" = printFile filename
                         | cmd == "remove" = removeLine filename
                         | cmd == "fnl" = filterNewLines filename
                         | cmd == "fp" = filterPunctuation filename
-                        | cmd == "quit" = putStrLn "Quit"
+                        | cmd == "exit" = putStrLn "Exit"
                         | otherwise  = putStrLn "Unknown command"
 
 printFile :: String -> IO()
@@ -29,13 +30,23 @@ printFile filename = do
 
 addLine :: String -> IO()
 addLine filename = do
-  putStr "Enter line number to add a new line after: "
+  putStr "Enter line number to insert new line to: "
   n <- readNum
   putStr "Enter the new line: "
   line <- getLine
-  contents <- readFile filename
+
+  handle <- openFile filename ReadMode
+  contents <- hGetContents handle
   let fileLines = lines contents
-  writeFile filename (unlines $ take n fileLines ++ [line] ++ drop n fileLines)
+
+  (tempName, tempHandle) <- openTempFile "." "temp"
+  hPutStr tempHandle $ unlines $ take n fileLines ++ [line] ++ drop n fileLines
+
+  hClose handle
+  hClose tempHandle
+
+  removeFile filename
+  renameFile tempName filename
   where
     readNum :: IO Int
     readNum = readLn
@@ -44,9 +55,19 @@ removeLine :: String -> IO()
 removeLine filename = do
   putStr "Enter line number: "
   n <- readNum
-  contents <- readFile filename
+
+  handle <- openFile filename ReadMode
+  contents <- hGetContents handle
   let fileLines = lines contents
-  writeFile filename (unlines $ delete (fileLines !! n) fileLines)
+
+  (tempName, tempHandle) <- openTempFile "." "temp"
+  hPutStr tempHandle $ unlines $ delete (fileLines !! n) fileLines
+
+  hClose handle
+  hClose tempHandle
+
+  removeFile filename
+  renameFile tempName filename
   where
     readNum :: IO Int
     readNum = readLn
