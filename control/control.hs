@@ -21,7 +21,7 @@ countWordsInFile inputFilename outputFilename = do
   writeFile outputFilename $ intercalate "\n" $ map (\(x, i) -> show i ++ ":" ++ x) $ sortPairs $ countWords contents
   where
     countWords :: String -> [(String, Int)]
-    countWords text = toList $ fromListWith (+) [(x, 1) | x <- (words text)]
+    countWords text = toList $ fromListWith (+) [(x, 1) | x <- (words $ filter (not . isPunctuation) text)]
     
     sortPairs :: [(String, Int)] -> [(String, Int)]
     sortPairs xs = sortBy (\(x1, i1) (x2, i2) -> if i1 < i2 then GT else LT) xs
