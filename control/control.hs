@@ -24,7 +24,7 @@ countWordsInFile inputFilename outputFilename = do
     countWords text = toList $ fromListWith (+) [(x, 1) | x <- (words $ filter (not . isPunctuation) text)]
     
     sortPairs :: [(String, Int)] -> [(String, Int)]
-    sortPairs xs = sortBy (\(x1, i1) (x2, i2) -> if i1 < i2 then GT else LT) xs
+    sortPairs xs = sortBy (\(_, a) (_, b) -> compare b a) xs
 
 main :: IO()
 main = do
