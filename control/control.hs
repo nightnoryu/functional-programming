@@ -6,8 +6,11 @@ import Data.Char (isPunctuation)
 partitionN :: [a] -> Int -> [[a]]
 partitionN [] _ = []
 partitionN _ 0 = []
-partitionN xs n = [take count xs] ++ (partitionN (drop count xs) n)
-  where count = length xs `div` n
+partitionN xs n = partitionWithLengths xs (length xs `div` n) (length xs `mod` n)
+  where
+    partitionWithLengths [] _ _ = []
+    partitionWithLengths xs mainLength 0 = take mainLength xs : partitionWithLengths (drop mainLength xs) mainLength 0
+    partitionWithLengths xs mainLength remainder = take (mainLength + 1) xs : partitionWithLengths (drop (mainLength + 1) xs) mainLength (remainder - 1)
 
 elemIndices :: Eq a => a -> [a] -> [Int]
 elemIndices e xs = foldl (\acc (i, x) -> if x == e then acc ++ [i] else acc) [] (zip [0..] xs)
@@ -29,13 +32,13 @@ countWordsInFile inputFilename outputFilename = do
 main :: IO()
 main = do
   putStrLn "partitionN"
-  -- print(partitionN [1, 2, 3, 4, 5, 6, 7] 3)
-  -- print(partitionN [1, 2, 3, 4, 5, 6, 7] 4)
-  -- print(partitionN [1,2,3,4] 7)
-  -- print(partitionN [1, 2, 3, 4, 5, 6, 7] 0)
+  print(partitionN [1, 2, 3, 4, 5, 6, 7] 3)
+  print(partitionN [1, 2, 3, 4, 5, 6, 7] 4)
+  print(partitionN [1,2,3,4] 7)
+  print(partitionN [1, 2, 3, 4, 5, 6, 7] 0)
   -- Из-за возвращения пустого списка Show роняет ошибку,
   -- поэтому проверяем пограничное условие через length.
-  -- print(length $ partitionN [] 4)
+  print(length $ partitionN [] 4)
   putStrLn ""
 
   putStrLn "elemIndices"
