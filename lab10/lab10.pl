@@ -10,5 +10,12 @@ seg(7, point(10, 12), point(10, 3)).
 seg(8, point(11, 13), point(11, 3)).
 seg(9, point(12, 12), point(12, 2)).
 
-horiz(N) :- seg(N, point(_, Y1), point(_, Y2)), Y1 = Y2.
-vertical(N) :- seg(N, point(X1, _), point(X2, _)), X1 = X2.
+horiz(N) :- seg(N, point(_, Y), point(_, Y)).
+vertical(N) :- seg(N, point(X, _), point(X, _)).
+
+% Задание 2
+
+seglength(N, L) :- seg(N, point(X1, Y1), point(X2, Y2)),
+  L is sqrt((X2 - X1) * (X2 - X1) + (Y2 - Y1) * (Y2 - Y1)).
+
+cross(N, M, point(X, Y), NL, ML) :-
