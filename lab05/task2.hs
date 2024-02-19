@@ -1,7 +1,7 @@
+import Data.Char
+import System.Directory
 import System.Environment
 import System.IO
-import System.Directory
-import Data.Char
 
 replacePunctuation :: Char -> String -> String
 replacePunctuation repl = map (\c -> if isPunctuation c then repl else c)

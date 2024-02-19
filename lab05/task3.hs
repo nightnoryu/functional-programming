@@ -1,8 +1,9 @@
-import System.IO
-import System.Directory
 import Control.Monad
-import Data.List
 import Data.Char
+import Data.List
+import System.Directory
+import System.Environment
+import System.IO
 
 mainLoop :: String -> IO()
 mainLoop filename = do
@@ -89,6 +90,13 @@ filterPunctuation filename = do
 main :: IO()
 main = do
   hSetBuffering stdout NoBuffering
-  putStr "Enter the name of the file to work with: "
-  filename <- getLine
-  mainLoop filename
+  args <- getArgs
+  if length args /= 1
+    then putStrLn "Invalid arguments. Usage: task3 [filename]"
+    else do
+      let filename = head args
+      fileExists <- doesFileExist filename
+      if not fileExists
+        then putStrLn "File does not exist."
+        else do
+          mainLoop filename
