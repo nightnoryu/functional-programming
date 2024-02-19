@@ -1,5 +1,9 @@
 import System.IO
 
+findStart :: Int -> Int -> Int
+findStart start multiplicator | start `mod` multiplicator == 0 = start
+                              | otherwise                      = findStart (start + 1) multiplicator
+
 main :: IO()
 main = do
   hSetBuffering stdout NoBuffering
@@ -8,8 +12,11 @@ main = do
   putStr "Enter element count: "
   count <- readNum
   putStr "Enter multiplicator: "
-  mult <- readNum
-  print [start + mult * x | x <- [0..count - 1]]
+  multiplicator <- readNum
+
+  let actualStart = findStart start multiplicator
+  print [actualStart + multiplicator * x | x <- [0..count - 1]]
+
   where
-    readNum :: IO Integer
+    readNum :: IO Int
     readNum = readLn
