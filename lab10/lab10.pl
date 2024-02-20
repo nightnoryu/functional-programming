@@ -23,3 +23,17 @@ cross(N, M, point(X, Y), NL, ML) :- seg(N, point(X1, Y), point(X2, Y)), seg(M, p
   Y4 < Y, Y < Y3,
   seglength(N, NL),
   seglength(M, ML).
+
+% Задание 3
+
+per_sq(A, B, C, D, P, S) :- 
+  cross(A, B, point(X1, Y1), _, _),
+  cross(A, D, point(X2, Y1), _, _),
+  cross(C, B, point(X1, Y2), _, _),
+  cross(C, D, point(X2, Y2), _, _),
+  Y1 > Y2,
+  X1 > X2,
+  S1 is abs(X2 - X1),
+  S2 is abs(Y1 - Y2),
+  P is (S1 + S2) * 2,
+  S is S1 * S2.
