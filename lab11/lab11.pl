@@ -22,11 +22,10 @@ double([], []).
 double([H|T1], [H,H|T2]) :- double(T1, T2).
 
 % Задание 6
-% TODO: reversed
 
 split([], [], []).
-split([H|T1], [H|T2], L3) :- even(H), split(T1, T2, L3).
-split([H|T1], L2, [H|T3]) :- not(even(H)), split(T1, L2, T3).
+split(L1, [H|T2], L3) :- append(T1, [H], L1), even(H), split(T1, T2, L3).
+split(L1, L2, [H|T3]) :- append(T1, [H], L1), not(even(H)), split(T1, L2, T3).
 
 even(N) :- mod(N, 2) =:= 0.
 
