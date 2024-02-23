@@ -1,10 +1,10 @@
 % Задание 1
 
-trim([_|T], L) :- reverse(T, [_|RT]), reverse(RT, L).
+trim(L1, L2) :- append([_|L2], [_], L1).
 
 % Задание 2
 
-first_last([H1|T], L2) :- reverse(T, [H2|RT]), reverse(RT, RRT), append([H2], RRT, T2), append(T2, [H1], L2).
+first_last(L1, L2) :- append([H|T], [Last], L1), append([Last|T], [H], L2).
 
 % Задание 3
 
@@ -25,8 +25,10 @@ double([H|T1], [H,H|T2]) :- double(T1, T2).
 % TODO: reversed
 
 split([], [], []).
-split([H|T1], [H|T2], L3) :- 0 is H mod 2, split(T1, T2, L3).
-split([H|T1], L2, [H|T3]) :- 1 is H mod 2, split(T1, L2, T3).
+split([H|T1], [H|T2], L3) :- even(H), split(T1, T2, L3).
+split([H|T1], L2, [H|T3]) :- not(even(H)), split(T1, L2, T3).
+
+even(N) :- mod(N, 2) =:= 0.
 
 % Задание 7
 
