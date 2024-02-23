@@ -30,8 +30,10 @@ split([H|T1], L2, [H|T3]) :- 1 is H mod 2, split(T1, L2, T3).
 
 % Задание 7
 
-% repeat3(L1, L2) :-
+repeat3(L1, L2) :- append([H|T], [Last], L1), append([Last, Last, Last | T], [H, H, H], L2).
 
 % Задание 8
 
-% combi(L1, L2, L3) :-
+combi([], L2, L2).
+combi(L1, [], L1).
+combi([H1|T1], [H2|T2], [H1, H2 | T3]) :- combi(T1, T2, T3).
