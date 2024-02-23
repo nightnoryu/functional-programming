@@ -31,7 +31,7 @@ even(N) :- mod(N, 2) =:= 0.
 
 % Задание 7
 
-repeat3(L1, L2) :- append([H|T], [Last], L1), append([Last, Last, Last | T], [H, H, H], L2).
+repeat_back3(L1, L2) :- append([H|T], [Last], L1), append([Last, Last, Last | T], [H, H, H], L2).
 
 % Задание 8
 
